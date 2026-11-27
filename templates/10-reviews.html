@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>قالب Blogger: مراجعات منتجات (معاينة تصميم)</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#f1f5f9;color:#0f172a;line-height:1.7}
+.demo{background:#fde68a;color:#451a03;padding:8px 14px;text-align:center;font-size:13px}.demo a{color:#78350f;font-weight:bold}
+
+header{background:#1e293b;color:#fff;padding:26px;text-align:center}.w{max-width:960px;margin:auto;padding:20px}.rv{background:#fff;border-radius:14px;padding:18px;margin-bottom:16px;border:1px solid #e2e8f0}
+.st{color:#f59e0b;font-size:20px}.pc{display:grid;grid-template-columns:1fr 1fr;gap:10px}.pro{background:#dcfce7;padding:10px;border-radius:8px}.con{background:#fee2e2;padding:10px;border-radius:8px}
+table{width:100%;border-collapse:collapse;background:#fff}td,th{border:1px solid #e2e8f0;padding:8px}button{background:#1e293b;color:#fff;border:0;padding:7px 14px;border-radius:99px;cursor:pointer;font:inherit}</style></head><body><div class="demo">نموذج تجريبي (Demo) ببيانات وهمية، واجهة أمامية فقط بدون قاعدة بيانات · <a href="../index.html">العودة للمعرض</a></div>
+
+<header><h1>مراجعات تقنية</h1><p>قالب مراجعات بنجوم وإيجابيات وسلبيات وجدول مقارنة (معاينة، منتجات وهمية)</p></header><div class="w"><p><button onclick="f('')">الكل</button> <button onclick="f('هاتف')">هواتف</button> <button onclick="f('سماعة')">سماعات</button></p><div id="L"></div>
+<h2>جدول مقارنة</h2><table><tr><th>المنتج</th><th>السعر</th><th>التقييم</th></tr><tr><td>هاتف X1</td><td>9000</td><td>4.5</td></tr><tr><td>سماعة S2</td><td>1500</td><td>4.0</td></tr><tr><td>هاتف Z3</td><td>6500</td><td>3.5</td></tr></table></div><script>
+var R=[["هاتف X1","هاتف",4.5,"شاشة ممتازة","بطارية متوسطة"],["سماعة S2","سماعة",4,"صوت نقي","سعر مرتفع"],["هاتف Z3","هاتف",3.5,"سعر مناسب","كاميرا ضعيفة"]];
+function f(c){document.getElementById('L').innerHTML=R.filter(function(x){return!c||x[1]==c}).map(function(x){return'<div class="rv"><h3>'+x[0]+'</h3><div class="st">'+'★'.repeat(Math.round(x[2]))+'☆'.repeat(5-Math.round(x[2]))+' ('+x[2]+')</div><div class="pc"><div class="pro">+ '+x[3]+'</div><div class="con">- '+x[4]+'</div></div></div>'}).join('')}f('');</script></body></html>

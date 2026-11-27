@@ -1,0 +1,13 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>قالب Blogger: وصفات (معاينة تصميم)</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#fffbeb;color:#451a03;line-height:1.7}
+.demo{background:#fde68a;color:#451a03;padding:8px 14px;text-align:center;font-size:13px}.demo a{color:#78350f;font-weight:bold}
+
+header{background:#ea580c;color:#fff;padding:28px;text-align:center}.w{max-width:860px;margin:auto;padding:20px}.box{background:#fff;border-radius:16px;padding:20px;border:1px solid #fed7aa}
+button{background:#ea580c;color:#fff;border:0;padding:8px 14px;border-radius:8px;cursor:pointer;font:inherit;margin:3px}li{margin:6px 0}#tm{font-size:34px;font-weight:bold}</style></head><body><div class="demo">نموذج تجريبي (Demo) ببيانات وهمية، واجهة أمامية فقط بدون قاعدة بيانات · <a href="../index.html">العودة للمعرض</a></div>
+
+<header><h1>مدونة طبخ بيتي</h1><p>قالب وصفات بتغيير الكميات ومؤقت وطباعة (معاينة، محتوى وهمي)</p></header><div class="w"><div class="box"><h2>كشري بيتي</h2><p>عدد الحصص: <button onclick="s(-1)">-</button> <b id="n">4</b> <button onclick="s(1)">+</button></p>
+<ul id="l"></ul><h3>مؤقت الطبخ</h3><div id="tm">10:00</div><button onclick="st()">ابدأ</button><button onclick="rs()">إعادة</button> <button onclick="window.print()">طباعة الوصفة</button></div></div><script>
+var B=[["أرز (كوب)",1],["عدس (كوب)",0.5],["مكرونة (كوب)",1],["بصل (حبة)",2],["صلصة (ملعقة)",3]],n=4,T=600,I=null;
+function s(d){n=Math.max(1,Math.min(20,n+d));r()}function r(){document.getElementById('n').textContent=n;document.getElementById('l').innerHTML=B.map(function(b){return'<li>'+b[0]+': '+(b[1]*n/4).toFixed(2).replace(/\.?0+$/,'')+'</li>'}).join('')}
+function f(){var m=Math.floor(T/60),x=T%60;document.getElementById('tm').textContent=(m<10?'0':'')+m+':'+(x<10?'0':'')+x}
+function st(){if(I)return;I=setInterval(function(){if(T>0){T--;f()}else{clearInterval(I);I=null}},1000)}function rs(){clearInterval(I);I=null;T=600;f()}r();</script></body></html>
