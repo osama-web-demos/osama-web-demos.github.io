@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>نظام كاشير — نسخة تجريبية</title>
+<style>
+  :root{
+    --ink:#111827; --muted:#6b7280; --line:#e5e7eb; --bg:#f3f4f6;
+    --brand:#2563eb; --brand-2:#1d4ed8; --ok:#059669; --radius:14px;
+    --shadow:0 1px 2px rgba(17,24,39,.06), 0 10px 30px rgba(17,24,39,.07);
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:"Noto Sans Arabic","Segoe UI",Tahoma,sans-serif}
+  .wrap{display:grid; grid-template-columns:1fr 380px; gap:18px; padding:18px; min-height:100vh}
+  .panel{background:#fff; border-radius:var(--radius); box-shadow:var(--shadow)}
+  /* left: catalog */
+  .catalog{display:flex; flex-direction:column; overflow:hidden}
+  .cat-head{padding:16px 18px; display:flex; gap:10px; align-items:center; border-bottom:1px solid var(--line)}
+  .cat-head h1{font-size:17px; margin:0; margin-left:auto}
+  input[type=search]{flex:1; font-family:inherit; font-size:14px; padding:10px 12px; border:1px solid var(--line); border-radius:10px; outline:none}
+  input[type=search]:focus{border-color:var(--brand); box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+  .cats{display:flex; gap:8px; padding:12px 18px; overflow:auto; border-bottom:1px solid var(--line)}
+  .chip{border:1px solid var(--line); background:#fff; border-radius:999px; padding:7px 14px; font-size:13px; cursor:pointer; white-space:nowrap; font-family:inherit}
+  .chip.active{background:var(--brand); border-color:var(--brand); color:#fff}
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; padding:16px 18px; overflow:auto}
+  .prod{border:1px solid var(--line); border-radius:12px; padding:12px; cursor:pointer; transition:.15s; background:#fff; text-align:right; font-family:inherit}
+  .prod:hover{border-color:var(--brand); box-shadow:0 6px 18px rgba(37,99,235,.12); transform:translateY(-1px)}
+  .prod .thumb{height:64px; border-radius:9px; margin-bottom:10px; display:grid; place-items:center; font-size:22px; font-weight:800; color:#1e3a8a; background:#e0e7ff}
+  .prod .name{font-size:14px; font-weight:600; margin-bottom:4px}
+  .prod .price{font-size:13px; color:var(--muted)}
+  /* right: cart */
+  .cart{display:flex; flex-direction:column; overflow:hidden}
+  .cart-head{padding:16px 18px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:8px}
+  .cart-head h2{font-size:16px; margin:0}
+  .badge{background:#eff6ff; color:var(--brand-2); border-radius:999px; padding:3px 9px; font-size:12px; font-weight:700}
+  .lines{flex:1; overflow:auto; padding:8px 10px}
+  .line{display:grid; grid-template-columns:1fr auto; gap:8px; padding:11px 8px; border-bottom:1px solid #f3f4f6}
+  .line .t{font-size:14px; font-weight:600}
+  .line .p{font-size:12.5px; color:var(--muted); margin-top:2px}
+  .qty{display:flex; align-items:center; gap:6px; margin-top:8px}
+  .qty button{width:26px; height:26px; border-radius:7px; border:1px solid var(--line); background:#fff; cursor:pointer; font-size:15px; line-height:1; font-family:inherit}
+  .qty span{min-width:22px; text-align:center; font-size:13.5px}
+  .line .amt{font-size:14px; font-weight:700; white-space:nowrap}
+  .empty{color:var(--muted); text-align:center; padding:40px 10px; font-size:13.5px}
+  .totals{padding:14px 18px; border-top:1px solid var(--line); display:grid; gap:8px; background:#fafafa}
+  .trow{display:flex; justify-content:space-between; font-size:13.5px; color:#374151}
+  .trow.total{font-size:18px; font-weight:800; color:var(--ink); border-top:1px dashed #d1d5db; padding-top:10px; margin-top:2px}
+  .pay{display:flex; gap:8px; padding:0 18px 14px}
+  .pay button{flex:1; border-radius:10px; border:1px solid var(--line); background:#fff; padding:9px; font-family:inherit; font-size:13px; cursor:pointer}
+  .pay button.sel{border-color:var(--brand); background:#eff6ff; color:var(--brand-2); font-weight:700}
+  .checkout{margin:0 18px 18px; border:0; border-radius:12px; padding:14px; background:var(--brand); color:#fff; font-family:inherit; font-size:15px; font-weight:700; cursor:pointer}
+  .checkout:hover{background:var(--brand-2)}
+  .checkout:disabled{background:#cbd5e1; cursor:not-allowed}
+  /* receipt modal */
+  .overlay{position:fixed; inset:0; background:rgba(17,24,39,.55); display:none; place-items:center; z-index:9; padding:20px}
+  .overlay.open{display:grid}
+  .receipt{background:#fff; width:min(380px,100%); border-radius:14px; padding:22px; font-size:13.5px; line-height:1.95}
+  .receipt .rh{text-align:center; border-bottom:1px dashed #d1d5db; padding-bottom:12px; margin-bottom:12px}
+  .receipt .rh strong{display:block; font-size:16px}
+  .receipt table{width:100%; border-collapse:collapse; margin:10px 0}
+  .receipt td{padding:5px 0; font-size:13px}
+  .receipt td:last-child{text-align:left; direction:ltr}
+  .receipt .tot{border-top:1px dashed #d1d5db; padding-top:10px; display:flex; justify-content:space-between; font-weight:800; font-size:15px}
+  .rbtns{display:flex; gap:8px; margin-top:16px}
+  .rbtns button{flex:1; padding:11px; border-radius:10px; border:1px solid var(--line); background:#fff; font-family:inherit; cursor:pointer}
+  .rbtns button.p{background:var(--brand); border-color:var(--brand); color:#fff; font-weight:700}
+  @media print{ body{background:#fff} .wrap{display:none} .overlay{position:static; display:block; background:#fff; padding:0} .receipt{width:100%; box-shadow:none} .rbtns{display:none} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="panel catalog">
+    <div class="cat-head">
+      <input type="search" id="q" placeholder="ابحث عن منتج…" oninput="renderProducts()">
+      <h1>نقطة البيع</h1>
+    </div>
+    <div class="cats" id="cats"></div>
+    <div class="grid" id="products"></div>
+  </section>
+
+  <aside class="panel cart">
+    <div class="cart-head">
+      <span class="badge" id="count">0</span>
+      <h2>الطلب الحالي</h2>
+      <button class="chip" style="margin-right:auto" onclick="clearCart()">تفريغ</button>
+    </div>
+    <div class="lines" id="lines"><div class="empty">لم تتم إضافة أي منتج بعد</div></div>
+    <div class="totals">
+      <div class="trow"><span>المجموع الفرعي</span><span id="sub">0 ج.م</span></div>
+      <div class="trow"><span>ضريبة القيمة المضافة (14%)</span><span id="vat">0 ج.م</span></div>
+      <div class="trow total"><span>الإجمالي</span><span id="tot">0 ج.م</span></div>
+    </div>
+    <div class="pay" id="pay">
+      <button class="sel" data-m="نقدي">نقدي</button>
+      <button data-m="بطاقة">بطاقة</button>
+      <button data-m="محفظة">محفظة</button>
+    </div>
+    <button class="checkout" id="payBtn" onclick="checkout()" disabled>إتمام الدفع</button>
+  </aside>
+</div>
+
+<div class="overlay" id="ov">
+  <div class="receipt" id="rcpt"></div>
+</div>
+
+<script>
+const money = n => n.toLocaleString('en-US',{maximumFractionDigits:2}) + ' جنيه';
+const products = [
+  {id:1, name:'قهوة تركي', cat:'مشروبات ساخنة', price:35},
+  {id:2, name:'إسبريسو دوبل', cat:'مشروبات ساخنة', price:45},
+  {id:3, name:'كابتشينو', cat:'مشروبات ساخنة', price:55},
+  {id:4, name:'شاي بالنعناع', cat:'مشروبات ساخنة', price:25},
+  {id:5, name:'عصير برتقال', cat:'مشروبات باردة', price:40},
+  {id:6, name:'ليمون بالنعناع', cat:'مشروبات باردة', price:38},
+  {id:7, name:'مياه معدنية', cat:'مشروبات باردة', price:10},
+  {id:8, name:'كرواسون جبن', cat:'مخبوزات', price:30},
+  {id:9, name:'كيك شوكولاتة', cat:'حلويات', price:65},
+  {id:10, name:'تشيز كيك', cat:'حلويات', price:70},
+  {id:11, name:'ساندوتش دجاج', cat:'ساندوتشات', price:85},
+  {id:12, name:'سلطة سيزر', cat:'ساندوتشات', price:75}
+];
+let cart = [{id:1,name:'قهوة تركي',cat:'مشروبات ساخنة',price:35,qty:2},{id:9,name:'كيك شوكولاتة',cat:'حلويات',price:65,qty:1},{id:7,name:'مياه معدنية',cat:'مشروبات باردة',price:10,qty:2}], payMethod = 'نقدي', activeCat = 'الكل';
+
+function cats(){
+  const set = ['الكل', ...new Set(products.map(p=>p.cat))];
+  document.getElementById('cats').innerHTML = set.map(c=>
+    `<button class="chip ${c===activeCat?'active':''}" onclick="setCat('${c}')">${c}</button>`).join('');
+}
+function setCat(c){ activeCat=c; cats(); renderProducts(); }
+
+function renderProducts(){
+  const q = document.getElementById('q').value.trim();
+  const list = products.filter(p=>(activeCat==='الكل'||p.cat===activeCat) && (!q||p.name.includes(q)));
+  document.getElementById('products').innerHTML = list.map(p=>`
+    <button class="prod" onclick="add(${p.id})">
+      <div class="thumb">${p.name.slice(0,1)}</div>
+      <div class="name">${p.name}</div>
+      <div class="price">${money(p.price)}</div>
+    </button>`).join('') || '<div class="empty">لا يوجد منتج مطابق</div>';
+}
+
+function add(id){
+  const p = products.find(x=>x.id===id);
+  const line = cart.find(l=>l.id===id);
+  if(line) line.qty++; else cart.push({...p, qty:1});
+  renderCart();
+}
+function change(id, d){
+  const line = cart.find(l=>l.id===id);
+  if(!line) return;
+  line.qty += d;
+  if(line.qty<=0) cart = cart.filter(l=>l.id!==id);
+  renderCart();
+}
+function clearCart(){ cart=[]; renderCart(); }
+
+function renderCart(){
+  const box = document.getElementById('lines');
+  if(!cart.length){ box.innerHTML = '<div class="empty">لم تتم إضافة أي منتج بعد</div>'; }
+  else box.innerHTML = cart.map(l=>`
+    <div class="line">
+      <div>
+        <div class="t">${l.name}</div>
+        <div class="p">${money(l.price)} × ${l.qty}</div>
+        <div class="qty">
+          <button onclick="change(${l.id},-1)">−</button><span>${l.qty}</span><button onclick="change(${l.id},1)">+</button>
+        </div>
+      </div>
+      <div class="amt">${money(l.price*l.qty)}</div>
+    </div>`).join('');
+
+  const sub = cart.reduce((s,l)=>s+l.price*l.qty,0);
+  const vat = sub*0.14;
+  document.getElementById('sub').textContent = money(sub);
+  document.getElementById('vat').textContent = money(+vat.toFixed(2));
+  document.getElementById('tot').textContent = money(+(sub+vat).toFixed(2));
+  document.getElementById('count').textContent = cart.reduce((s,l)=>s+l.qty,0);
+  document.getElementById('payBtn').disabled = !cart.length;
+}
+
+document.querySelectorAll('#pay button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#pay button').forEach(x=>x.classList.remove('sel'));
+  b.classList.add('sel'); payMethod = b.dataset.m;
+});
+
+function checkout(){
+  const sub = cart.reduce((s,l)=>s+l.price*l.qty,0);
+  const vat = +(sub*0.14).toFixed(2);
+  const total = +(sub+vat).toFixed(2);
+  const no = 'INV-' + Math.floor(100000+Math.random()*899999);
+  const now = new Date();
+  document.getElementById('rcpt').innerHTML = `
+    <div class="rh"><strong>كافيه النخبة</strong>فاتورة ضريبية مبسطة<div style="color:#6b7280;font-size:12px">المنصورة — شارع الجيش</div></div>
+    <table>
+      <tr><td>رقم الفاتورة</td><td>${no}</td></tr>
+      <tr><td>التاريخ</td><td>${now.toLocaleDateString('en-GB')} ${now.toTimeString().slice(0,5)}</td></tr>
+      <tr><td>طريقة الدفع</td><td>${payMethod}</td></tr>
+    </table>
+    <table>
+      ${cart.map(l=>`<tr><td>${l.name} × ${l.qty}</td><td>${money(l.price*l.qty)}</td></tr>`).join('')}
+    </table>
+    <table>
+      <tr><td>المجموع الفرعي</td><td>${money(sub)}</td></tr>
+      <tr><td>ضريبة 14%</td><td>${money(vat)}</td></tr>
+    </table>
+    <div class="tot"><span>الإجمالي</span><span>${money(total)}</span></div>
+    <div class="rbtns">
+      <button class="p" onclick="window.print()">طباعة</button>
+      <button onclick="closeRcpt()">إغلاق</button>
+    </div>`;
+  document.getElementById('ov').classList.add('open');
+}
+function closeRcpt(){ document.getElementById('ov').classList.remove('open'); cart=[]; renderCart(); }
+
+cats(); renderProducts(); renderCart();
+</script>
+</body>
+</html>
