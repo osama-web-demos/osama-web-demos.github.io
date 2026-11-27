@@ -1,0 +1,17 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>حجز خدمات صيانة (Demo)</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#0f172a;color:#e2e8f0;line-height:1.7}
+.demo{background:#fde68a;color:#451a03;padding:8px 14px;text-align:center;font-size:13px}.demo a{color:#78350f;font-weight:bold}
+
+.w{max-width:900px;margin:auto;padding:20px}input,select{padding:9px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#e2e8f0;font:inherit;margin:4px}
+button{background:#14b8a6;color:#042f2e;border:0;padding:9px 16px;border-radius:8px;cursor:pointer;font:inherit}button.x{background:#ef4444;color:#fff}
+table{width:100%;border-collapse:collapse;margin-top:16px;background:#1e293b;border-radius:10px;overflow:hidden}td,th{padding:10px;border-bottom:1px solid #334155;text-align:right}.err{color:#fca5a5}</style></head><body><div class="demo">نموذج تجريبي (Demo) ببيانات وهمية، واجهة أمامية فقط بدون قاعدة بيانات · <a href="../index.html">العودة للمعرض</a></div>
+
+<div class="w"><h1>حجز مواعيد صيانة</h1><p>يحفظ الحجوزات في متصفحك فقط (localStorage). ببيانات وهمية.</p>
+<div><select id="sv"><option>سباكة</option><option>كهرباء</option><option>تكييف</option><option>نجارة</option></select><input id="cl" placeholder="اسم العميل"><input id="ad" placeholder="العنوان (وهمي)"><input id="dt" type="datetime-local"><button onclick="sv()">حفظ الحجز</button> <span class="err" id="er"></span></div>
+<input id="sr" placeholder="بحث" oninput="rd()"><table><thead><tr><th>الخدمة</th><th>العميل</th><th>العنوان</th><th>الموعد</th><th></th></tr></thead><tbody id="tb"></tbody></table></div><script>
+var K='demo_service_booking',D=JSON.parse(localStorage.getItem(K)||'[]'),E=-1;
+function sv(){var v=['sv','cl','ad','dt'].map(function(i){return document.getElementById(i).value});if(!v[1].trim()||!v[3]){document.getElementById('er').textContent='أدخل الاسم والموعد';return}document.getElementById('er').textContent='';var o={s:v[0],c:v[1],a:v[2],d:v[3]};if(E>-1){D[E]=o;E=-1}else D.push(o);localStorage.setItem(K,JSON.stringify(D));['cl','ad','dt'].forEach(function(i){document.getElementById(i).value=''});rd()}
+function rd(){var q=document.getElementById('sr').value;document.getElementById('tb').innerHTML=D.map(function(o,i){return{o:o,i:i}}).filter(function(a){return(a.o.c+a.o.s+a.o.a).indexOf(q)>-1}).map(function(a){return'<tr><td>'+a.o.s+'</td><td>'+esc(a.o.c)+'</td><td>'+esc(a.o.a)+'</td><td>'+a.o.d.replace('T',' ')+'</td><td><button onclick="ed('+a.i+')">تعديل</button> <button class="x" onclick="dl('+a.i+')">حذف</button></td></tr>'}).join('')}
+function esc(s){return s.replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function ed(i){var o=D[i];E=i;document.getElementById('sv').value=o.s;document.getElementById('cl').value=o.c;document.getElementById('ad').value=o.a;document.getElementById('dt').value=o.d}
+function dl(i){D.splice(i,1);localStorage.setItem(K,JSON.stringify(D));rd()}rd();</script></body></html>

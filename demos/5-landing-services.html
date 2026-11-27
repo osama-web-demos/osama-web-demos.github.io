@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>صفحة هبوط: شركة خدمات منزلية (Demo)</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#fff;color:#1f2937;line-height:1.7}
+.demo{background:#fde68a;color:#451a03;padding:8px 14px;text-align:center;font-size:13px}.demo a{color:#78350f;font-weight:bold}
+
+header{background:linear-gradient(135deg,#0ea5e9,#2563eb);color:#fff;padding:60px 20px;text-align:center}header h1{margin:0 0 10px;font-size:34px}
+.w{max-width:1000px;margin:auto;padding:30px 20px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{border:1px solid #e5e7eb;border-radius:14px;padding:18px}.card b{color:#2563eb}.btn{background:#f59e0b;color:#fff;border:0;padding:12px 24px;border-radius:10px;font:inherit;cursor:pointer;font-size:16px}
+input,select,textarea{width:100%;padding:10px;border:1px solid #d1d5db;border-radius:8px;margin:6px 0;font:inherit}
+.q{background:#f1f5f9;border-radius:12px;padding:14px}#ok{display:none;background:#dcfce7;color:#14532d;padding:12px;border-radius:10px;margin-top:10px}</style></head><body><div class="demo">نموذج تجريبي (Demo) ببيانات وهمية، واجهة أمامية فقط بدون قاعدة بيانات · <a href="../index.html">العودة للمعرض</a></div>
+
+<header><h1>نظافة بلس لخدمات المنازل</h1><p>تنظيف · صيانة تكييف · سباكة · كهرباء (اسم وهمي للعرض)</p><p><button class="btn" onclick="document.getElementById('f').scrollIntoView({behavior:'smooth'})">اطلب عرض سعر</button></p></header>
+<div class="w"><h2>خدماتنا</h2><div class="grid">
+<div class="card"><h3>تنظيف شامل</h3><p>شقق وفيلات، فريق مدرب.</p><b>من 800 جنيه (تقريبي)</b></div>
+<div class="card"><h3>صيانة تكييف</h3><p>غسيل وفحص وتعبئة.</p><b>من 350 جنيه (تقريبي)</b></div>
+<div class="card"><h3>سباكة</h3><p>تسريب، تركيب، إصلاح.</p><b>من 200 جنيه (تقريبي)</b></div>
+<div class="card"><h3>كهرباء</h3><p>تمديدات وإصلاح أعطال.</p><b>من 250 جنيه (تقريبي)</b></div></div>
+<h2>لماذا نحن؟</h2><div class="grid"><div class="q">ضمان على الخدمة لمدة 30 يوماً</div><div class="q">التزام بالمواعيد</div><div class="q">أسعار واضحة قبل البدء</div></div>
+<h2>آراء العملاء (أمثلة وهمية)</h2><div class="grid"><div class="q">"خدمة سريعة ونظيفة" - عميل تجريبي 1</div><div class="q">"التزام ممتاز بالموعد" - عميل تجريبي 2</div></div>
+<h2 id="f">اطلب عرض سعر</h2><form onsubmit="return send(event)"><input id="n" placeholder="الاسم" required><select id="s"><option>تنظيف شامل</option><option>صيانة تكييف</option><option>سباكة</option><option>كهرباء</option></select><textarea id="d" rows="3" placeholder="تفاصيل الطلب"></textarea><button class="btn">إرسال الطلب (تجريبي)</button></form><div id="ok"></div></div><script>
+function send(e){e.preventDefault();var o=document.getElementById('ok');o.style.display='block';o.textContent='تم تسجيل طلبك التجريبي يا '+document.getElementById('n').value+' لخدمة: '+document.getElementById('s').value+'. هذا نموذج لا يرسل بيانات لأي جهة.';return false}</script></body></html>

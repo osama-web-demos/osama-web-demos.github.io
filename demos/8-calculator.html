@@ -1,0 +1,12 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>حاسبة أقساط (Demo)</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#ecfeff;color:#083344;line-height:1.7}
+.demo{background:#fde68a;color:#451a03;padding:8px 14px;text-align:center;font-size:13px}.demo a{color:#78350f;font-weight:bold}
+
+.w{max-width:560px;margin:30px auto;background:#fff;border-radius:18px;padding:24px;box-shadow:0 10px 30px #0891b222}label{display:block;margin-top:12px;font-weight:bold}
+input{width:100%;padding:10px;border:1px solid #a5f3fc;border-radius:8px;font:inherit}.res{background:#0891b2;color:#fff;border-radius:14px;padding:16px;margin-top:18px;text-align:center}.res b{font-size:28px;display:block}small{color:#475569}</style></head><body><div class="demo">نموذج تجريبي (Demo) ببيانات وهمية، واجهة أمامية فقط بدون قاعدة بيانات · <a href="../index.html">العودة للمعرض</a></div>
+
+<div class="w"><h1>حاسبة قسط تقديرية</h1><label>سعر المنتج (جنيه)</label><input id="p" type="number" value="300000"><label>المقدم (جنيه)</label><input id="d" type="number" value="60000"><label>المدة (شهراً)</label><input id="m" type="number" value="36"><label>نسبة الفائدة السنوية % (اختياري)</label><input id="r" type="number" value="0">
+<div class="res">القسط الشهري التقديري<b id="o">-</b><span id="t"></span></div>
+<p><small>افتراضات الحساب: قسط ثابت. إذا كانت الفائدة 0 فالقسط = (السعر - المقدم) ÷ المدد. غير ذلك تُستخدم صيغة القسط الثابت القياسية. الأرقام تقديرية للعرض فقط وليست عرضاً من أي جهة تمويل.</small></p></div><script>
+function c(){var p=+document.getElementById('p').value,d=+document.getElementById('d').value,m=+document.getElementById('m').value,r=+document.getElementById('r').value/1200,L=p-d,o;if(L<=0||m<=0){document.getElementById('o').textContent='تحقق من المدخلات';document.getElementById('t').textContent='';return}o=r?L*r/(1-Math.pow(1+r,-m)):L/m;document.getElementById('o').textContent=o.toFixed(0)+' جنيه';document.getElementById('t').textContent='الإجمالي بعد المقدم: '+(o*m).toFixed(0)+' جنيه'}
+['p','d','m','r'].forEach(function(i){document.getElementById(i).oninput=c});c();</script></body></html>

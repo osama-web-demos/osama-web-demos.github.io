@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>متجر مصغر (Demo)</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#f8fafc;color:#0f172a;line-height:1.7}
+.demo{background:#fde68a;color:#451a03;padding:8px 14px;text-align:center;font-size:13px}.demo a{color:#78350f;font-weight:bold}
+
+header{background:#7c3aed;color:#fff;padding:20px;display:flex;justify-content:space-between;align-items:center}
+.w{max-width:1100px;margin:auto;padding:20px}.bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.bar input,.bar select{padding:9px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}.p{background:#fff;border-radius:14px;padding:14px;border:1px solid #e2e8f0}.p i{display:block;height:90px;border-radius:10px;margin-bottom:8px}
+button{background:#7c3aed;color:#fff;border:0;padding:8px 14px;border-radius:8px;cursor:pointer;font:inherit}.cart{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:14px;margin-top:18px}
+textarea{width:100%;min-height:110px;padding:8px;border-radius:8px;border:1px solid #cbd5e1;font:inherit}</style></head><body><div class="demo">نموذج تجريبي (Demo) ببيانات وهمية، واجهة أمامية فقط بدون قاعدة بيانات · <a href="../index.html">العودة للمعرض</a></div>
+
+<header><b>متجر ركن البيت (اسم وهمي)</b><span>السلة: <b id="cn">0</b></span></header><div class="w">
+<div class="bar"><input id="q" placeholder="ابحث عن منتج" oninput="r()"><select id="c" onchange="r()"><option value="">كل التصنيفات</option><option>أدوات مطبخ</option><option>ديكور</option><option>إضاءة</option></select><select id="o" onchange="r()"><option value="">بدون ترتيب</option><option value="a">الأرخص أولاً</option><option value="d">الأغلى أولاً</option></select></div>
+<div class="grid" id="g"></div>
+<div class="cart"><h3>السلة</h3><div id="ci">فارغة</div><p>الإجمالي: <b id="tt">0</b> جنيه</p><button onclick="mk()">تجهيز رسالة الطلب</button><p>نص رسالة الطلب (انسخه وأرسله بنفسك، النموذج لا يرسل شيئاً):</p><textarea id="m" readonly></textarea></div></div><script>
+var P=[["طقم أكواب",120,"أدوات مطبخ","#a78bfa"],["مقلاة غير لاصقة",340,"أدوات مطبخ","#f472b6"],["سكاكين 6 قطع",290,"أدوات مطبخ","#60a5fa"],["مزهرية سيراميك",180,"ديكور","#34d399"],["لوحة جدارية",450,"ديكور","#fbbf24"],["شمعة معطرة",90,"ديكور","#fb7185"],["أباجورة مكتب",260,"إضاءة","#818cf8"],["شريط LED",150,"إضاءة","#22d3ee"]],C={};
+function r(){var q=document.getElementById('q').value,c=document.getElementById('c').value,o=document.getElementById('o').value;var L=P.map(function(x,i){return{x:x,i:i}}).filter(function(a){return(!c||a.x[2]==c)&&a.x[0].indexOf(q)>-1});if(o)L.sort(function(a,b){return o=='a'?a.x[1]-b.x[1]:b.x[1]-a.x[1]});document.getElementById('g').innerHTML=L.map(function(a){return'<div class="p"><i style="background:'+a.x[3]+'"></i><b>'+a.x[0]+'</b><p>'+a.x[1]+' جنيه</p><button onclick="add('+a.i+')">أضف للسلة</button></div>'}).join('')||'لا نتائج'}
+function add(i){C[i]=(C[i]||0)+1;u()}function rm(i){delete C[i];u()}
+function u(){var n=0,t=0,h='';for(var i in C){n+=C[i];t+=C[i]*P[i][1];h+='<div>'+P[i][0]+' × '+C[i]+' <button onclick="rm('+i+')">حذف</button></div>'}document.getElementById('cn').textContent=n;document.getElementById('tt').textContent=t;document.getElementById('ci').innerHTML=h||'فارغة'}
+function mk(){var s='مرحباً، أريد طلب:\n',t=0;for(var i in C){s+='- '+P[i][0]+' × '+C[i]+'\n';t+=C[i]*P[i][1]}document.getElementById('m').value=s+'الإجمالي: '+t+' جنيه'}r();</script></body></html>
