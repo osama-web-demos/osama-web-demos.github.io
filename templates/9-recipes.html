@@ -3,7 +3,19 @@
 .demo{background:#fde68a;color:#451a03;padding:8px 14px;text-align:center;font-size:13px}.demo a{color:#78350f;font-weight:bold}
 
 header{background:#ea580c;color:#fff;padding:28px;text-align:center}.w{max-width:860px;margin:auto;padding:20px}.box{background:#fff;border-radius:16px;padding:20px;border:1px solid #fed7aa}
-button{background:#ea580c;color:#fff;border:0;padding:8px 14px;border-radius:8px;cursor:pointer;font:inherit;margin:3px}li{margin:6px 0}#tm{font-size:34px;font-weight:bold}</style></head><body><div class="demo">نموذج تجريبي (Demo) ببيانات وهمية، واجهة أمامية فقط بدون قاعدة بيانات · <a href="../index.html">العودة للمعرض</a></div>
+button{background:#ea580c;color:#fff;border:0;padding:8px 14px;border-radius:8px;cursor:pointer;font:inherit;margin:3px}li{margin:6px 0}#tm{font-size:34px;font-weight:bold}
+/*polish*/html{scroll-behavior:smooth}body{font-family:"Segoe UI",Tahoma,Arial,sans-serif!important;line-height:1.7;letter-spacing:0;-webkit-font-smoothing:antialiased}
+button,input,select,textarea,a{transition:transform .18s cubic-bezier(.16,1,.3,1),box-shadow .18s,background-color .18s,border-color .18s,filter .18s}
+button:active{transform:scale(.97)}button:hover{filter:brightness(1.07)}
+:focus-visible{outline:none!important;box-shadow:0 0 0 3px rgba(37,99,235,.35)!important}
+input:focus,select:focus,textarea:focus{outline:none;box-shadow:0 0 0 3px rgba(37,99,235,.25)}
+table,td,th,.num,b{font-variant-numeric:tabular-nums}
+::-webkit-scrollbar{height:6px;width:6px}::-webkit-scrollbar-thumb{background:rgba(100,116,139,.4);border-radius:6px}
+.demo{background:#0f172a!important;color:#e2e8f0!important;font-size:12.5px!important;padding:7px 12px!important}.demo a{color:#fff!important}
+.card,.p,.rv,.box,.q{box-shadow:0 1px 2px rgba(15,23,42,.04),0 6px 18px rgba(15,23,42,.06)}
+.card:hover,.p:hover,.rv:hover{transform:translateY(-2px)}.card,.p,.rv{transition:transform .25s cubic-bezier(.16,1,.3,1)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style></head><body><div class="demo">نموذج تجريبي (Demo) ببيانات وهمية، واجهة أمامية فقط بدون قاعدة بيانات · <a href="../index.html">العودة للمعرض</a></div>
 
 <header><h1>مدونة طبخ بيتي</h1><p>قالب وصفات بتغيير الكميات ومؤقت وطباعة (معاينة، محتوى وهمي)</p></header><div class="w"><div class="box"><h2>كشري بيتي</h2><p>عدد الحصص: <button onclick="s(-1)">-</button> <b id="n">4</b> <button onclick="s(1)">+</button></p>
 <ul id="l"></ul><h3>مؤقت الطبخ</h3><div id="tm">10:00</div><button onclick="st()">ابدأ</button><button onclick="rs()">إعادة</button> <button onclick="window.print()">طباعة الوصفة</button></div></div><script>
