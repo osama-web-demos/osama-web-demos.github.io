@@ -5,42 +5,54 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>نظام إدارة اشتراكات نادٍ رياضي واجتماعي | نموذج تجريبي</title>
 <style>
-:root{--p:#0f766e;--p2:#14b8a6;--bg:#f0fdfa;--card:#fff;--tx:#1f2937;--mu:#6b7280;--bd:#e5e7eb;--r:14px}
-*{box-sizing:border-box}body{margin:0;font-family:Tahoma,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--tx)}
-.demo-bar{background:#111827;color:#fde68a;font-size:13px;text-align:center;padding:6px 10px}
+:root{--p:#0f766e;--p2:#14b8a6;--bg:#f0fdfa;--card:#fff;--tx:#0f172a;--mu:#64748b;--bd:rgba(15,23,42,.09);--r:14px;--r2:calc(var(--r) - 4px);--sh:0 1px 2px rgba(15,23,42,.04),0 4px 14px rgba(15,23,42,.05);--ease:cubic-bezier(.16,1,.3,1);--hd:#f1f5f9;--in:#fff}
+[data-theme=dark]{--bg:#09090b;--card:#121215;--tx:#f1f5f9;--mu:#94a3b8;--bd:rgba(255,255,255,.09);--sh:inset 0 1px 0 rgba(255,255,255,.05),0 8px 24px rgba(0,0,0,.35);--hd:#1a1a20;--in:#17171c;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--tx);line-height:1.65;letter-spacing:0;transition:background .2s,color .2s}
+:focus-visible{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--p) 30%,transparent)}
+.demo-bar{background:#0f172a;color:#e2e8f0;font-size:12.5px;text-align:center;padding:7px 10px}.demo-bar b{background:#fde68a;color:#451a03;border-radius:6px;padding:1px 8px;margin-inline-end:6px}
 .demo-bar a{color:#fff}
-.wrap{display:flex;min-height:calc(100vh - 30px)}
-.side{background:var(--p);color:#fff;padding:20px 16px;min-width:210px}
-.side h1{font-size:19px;margin:0 0 4px}.side p{margin:0 0 18px;font-size:12px;opacity:.8}
-.side .nav b{display:block;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.14);font-size:14px;margin-bottom:6px}
-.main{flex:1;padding:22px;max-width:1100px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.top h2{margin:0;font-size:22px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}
-.st{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:14px;border-top:4px solid var(--p)}
-.st small{color:var(--mu);font-size:12px}.st div{font-size:24px;font-weight:700;margin-top:4px;color:var(--p)}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:16px;margin-bottom:16px}
-form.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
-label{font-size:12px;color:var(--mu);display:block;margin-bottom:3px}
-input,select{width:100%;padding:9px 10px;border:1px solid var(--bd);border-radius:8px;font:inherit;background:#fff}
-input:focus,select:focus{outline:2px solid var(--p2);border-color:transparent}
-.btn{background:var(--p);color:#fff;border:0;padding:9px 16px;border-radius:8px;cursor:pointer;font:inherit}
-.btn.o{background:#fff;color:var(--p);border:1px solid var(--p)}.btn.s{padding:5px 10px;font-size:12px}.btn.d{background:#dc2626}
-.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.tools input,.tools select{max-width:230px}
-.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:14px}
-th{background:#f3f4f6;text-align:right;padding:10px;white-space:nowrap}td{padding:10px;border-top:1px solid var(--bd);white-space:nowrap}
-.tag{padding:2px 9px;border-radius:99px;font-size:12px;background:color-mix(in srgb,var(--p) 14%,white);color:var(--p)}
-.empty{text-align:center;color:var(--mu);padding:24px}
+.wrap{display:flex;min-height:calc(100vh - 32px)}
+.side{background:linear-gradient(180deg,var(--p),color-mix(in srgb,var(--p) 78%,#000));color:#fff;padding:22px 16px;min-width:226px}
+.logo{width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.18);display:grid;place-items:center;margin-bottom:12px}.logo svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.side h1{font-size:18px;margin:0 0 4px;line-height:1.35}.side p{margin:0 0 20px;font-size:12px;opacity:.82}
+.side .nav b{display:block;padding:10px 12px;border-radius:var(--r2);background:rgba(255,255,255,.16);font-size:14px;margin-bottom:6px;font-weight:600}
+.main{flex:1;padding:26px;max-width:1120px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px}.top h2{margin:0;font-size:24px;line-height:1.25}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:18px}
+.st{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:16px;box-shadow:var(--sh);position:relative;overflow:hidden;transition:transform .18s var(--ease)}.st:hover{transform:translateY(-2px)}
+.st:before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--p)}
+.st small{color:var(--mu);font-size:12.5px}.st div{font-size:26px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums;line-height:1.3}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:18px;margin-bottom:18px;box-shadow:var(--sh)}
+form.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+label{font-size:12.5px;color:var(--mu);display:block;margin-bottom:4px;font-weight:600}
+input,select{width:100%;min-height:42px;padding:9px 12px;border:1px solid var(--bd);border-radius:var(--r2);font:inherit;background:var(--in);color:var(--tx);transition:border-color .18s,box-shadow .18s}
+input:focus,select:focus{border-color:var(--p);box-shadow:0 0 0 3px color-mix(in srgb,var(--p) 22%,transparent);outline:none}
+input.bad{border-color:#dc2626}.err{color:#dc2626;font-size:12px;min-height:16px}
+.btn{background:var(--p);color:#fff;border:1px solid transparent;min-height:40px;padding:8px 16px;border-radius:var(--r2);cursor:pointer;font:inherit;font-weight:600;transition:all .18s var(--ease)}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}.btn:active{transform:scale(.97)}
+.btn.o{background:transparent;color:var(--p);border-color:color-mix(in srgb,var(--p) 40%,transparent)}.btn.s{min-height:32px;padding:4px 11px;font-size:12.5px}.btn.d{background:#dc2626}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}.tools input,.tools select{max-width:240px}
+.tw{overflow-x:auto;border-radius:var(--r2)}table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+th{background:var(--hd);text-align:right;padding:11px 12px;white-space:nowrap;font-size:12.5px;color:var(--mu);font-weight:700}td{padding:11px 12px;border-top:1px solid var(--bd);white-space:nowrap}
+tbody tr{transition:background .15s}tbody tr:hover{background:color-mix(in srgb,var(--p) 5%,transparent)}
+.tag{padding:2px 10px;border-radius:99px;font-size:12px;font-weight:600;background:color-mix(in srgb,var(--p) 12%,var(--card));color:var(--p);border:1px solid color-mix(in srgb,var(--p) 25%,transparent)}
+.empty{text-align:center;color:var(--mu);padding:34px 10px}.empty svg{width:44px;height:44px;stroke:var(--mu);fill:none;stroke-width:1.4;display:block;margin:0 auto 8px;opacity:.7}
+.tg{position:fixed;inset-inline-start:18px;bottom:18px;display:grid;gap:8px;z-index:50}.toast{background:#0f172a;color:#fff;padding:11px 16px;border-radius:12px;font-size:14px;box-shadow:0 12px 30px rgba(0,0,0,.25);animation:in .3s var(--ease)}.toast.e{background:#b91c1c}
+@keyframes in{from{opacity:0;transform:translateY(10px) scale(.96)}to{opacity:1;transform:none}}
+.mo{position:fixed;inset:0;background:rgba(2,6,23,.55);display:none;place-items:center;z-index:60;padding:16px}.mo.on{display:grid}.md{background:var(--card);border-radius:18px;padding:22px;max-width:380px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.35);animation:in .25s var(--ease)}.md h3{margin:0 0 6px}.md p{color:var(--mu);margin:0 0 16px}.md .r{display:flex;gap:8px;justify-content:flex-start}
+.th{background:rgba(255,255,255,.16);border:0;color:#fff;border-radius:10px;padding:7px 12px;cursor:pointer;font:inherit;font-size:13px;margin-top:16px;transition:all .18s var(--ease)}.th:active{transform:scale(.97)}
 .rc{display:none}
-@media(max-width:760px){.wrap{display:block}.side{display:flex;align-items:center;justify-content:space-between;min-width:0}.side p,.side .nav{display:none}.main{padding:14px}}
-@media print{body *{visibility:hidden}.rc,.rc *{visibility:visible}.rc{display:block;position:absolute;inset:0;padding:30px}.demo-bar{display:none}}
+@media(max-width:760px){.wrap{display:block}.side{display:flex;align-items:center;justify-content:space-between;min-width:0;padding:12px 16px}.side p,.side .nav,.logo{display:none}.side .th{margin:0}.main{padding:14px}.top h2{font-size:20px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+::-webkit-scrollbar{height:6px;width:6px}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:6px}
+@media print{body *{visibility:hidden}.rc,.rc *{visibility:visible}.rc{display:block;position:absolute;inset:0;padding:30px;color:#000;background:#fff}.demo-bar{display:none}}
 .rc h3{text-align:center;margin:0 0 4px}.rc .l{display:flex;justify-content:space-between;border-bottom:1px dashed #999;padding:6px 0}
 </style>
 </head>
 <body>
-<div class="demo-bar">نموذج تجريبي (Demo) بيانات وهمية. يعمل داخل المتصفح فقط ويحفظ محليًا على جهازك. بدون قاعدة بيانات أو مزامنة.</div>
+<div class="demo-bar"><b>Demo</b>نموذج تجريبي ببيانات وهمية. يعمل داخل المتصفح فقط ويحفظ محليًا على جهازك. بدون قاعدة بيانات أو مزامنة.</div>
 <div class="wrap">
-<aside class="side"><h1>نظام إدارة اشتراكات نادٍ رياضي واجتماعي</h1><p>أعضاء، اشتراكات، إيصالات</p><div class="nav"><b>الرئيسية</b></div></aside>
+<aside class="side"><div class="logo"><svg viewBox="0 0 24 24"><path d="M4 7l8-4 8 4v10l-8 4-8-4z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></div><h1>نظام إدارة اشتراكات نادٍ رياضي واجتماعي</h1><p>أعضاء، اشتراكات، إيصالات</p><div class="nav"><b>الرئيسية</b></div><button class="th" id="theme" aria-label="تبديل الوضع الليلي">الوضع الليلي</button></aside>
 <main class="main">
 <div class="top"><h2>الأعضاء والاشتراكات</h2><div class="tools"><button class="btn o" id="csv">تصدير CSV</button><button class="btn o" id="reset">استعادة البيانات التجريبية</button></div></div>
 <div class="stats" id="stats"></div>
@@ -48,10 +60,10 @@ th{background:#f3f4f6;text-align:right;padding:10px;white-space:nowrap}td{paddin
 <div class="card">
 <div class="tools"><input id="q" placeholder="بحث..."><select id="fil"></select></div>
 <div class="tw"><table><thead id="th"></thead><tbody id="tb"></tbody></table></div>
-<div class="empty" id="em" style="display:none">لا توجد نتائج</div>
+<div class="empty" id="em" style="display:none"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><b>لا توجد نتائج</b><div>جرّب تغيير البحث أو أضف سجلاً جديداً.</div></div>
 </div>
 </main></div>
-<div class="rc" id="rc"></div>
+<div class="rc" id="rc"></div><div class="tg" id="tg" aria-live="polite"></div><div class="mo" id="mo"><div class="md" role="dialog" aria-modal="true"><h3 id="mt"></h3><p id="mp"></p><div class="r"><button class="btn d" id="my">تأكيد</button><button class="btn o" id="mn">رجوع</button></div></div></div>
 <script>
 const CFG={"key": "club", "title": "نظام إدارة اشتراكات نادٍ رياضي واجتماعي", "fields": [{"k": "name", "l": "اسم العضو", "t": "text"}, {"k": "phone", "l": "الهاتف", "t": "text"}, {"k": "plan", "l": "نوع الاشتراك", "t": "select", "o": ["شهري", "ربع سنوي", "سنوي"]}, {"k": "fee", "l": "المبلغ المدفوع", "t": "number", "u": "جنيه", "sum": true}, {"k": "start", "l": "بداية الاشتراك", "t": "date"}, {"k": "status", "l": "الحالة", "t": "select", "o": ["ساري", "منتهي", "موقوف"]}], "cols": ["name", "plan", "fee", "start", "status"], "seed": [{"name": "محمود السيد", "phone": "010-0000-0001", "plan": "شهري", "fee": 350, "start": "2026-11-01", "status": "ساري"}, {"name": "هدى علي", "phone": "010-0000-0002", "plan": "سنوي", "fee": 3500, "start": "2026-01-10", "status": "ساري"}, {"name": "كريم فؤاد", "phone": "010-0000-0003", "plan": "ربع سنوي", "fee": 950, "start": "2026-08-15", "status": "منتهي"}, {"name": "سلمى حسن", "phone": "010-0000-0004", "plan": "شهري", "fee": 350, "start": "2026-11-12", "status": "ساري"}, {"name": "عمرو شريف", "phone": "010-0000-0005", "plan": "سنوي", "fee": 3500, "start": "2026-03-02", "status": "موقوف"}], "countLabel": "عدد الأعضاء", "sumLabel": "إجمالي الإيرادات", "receipt": "طباعة إيصال", "addLabel": "إضافة عضو"};
 const KEY="demo_"+CFG.key;
@@ -60,12 +72,18 @@ let editId=null;
 const $=s=>document.querySelector(s);
 const save=()=>localStorage.setItem(KEY,JSON.stringify(rows));
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const toast=(m,e)=>{const t=document.createElement("div");t.className="toast"+(e?" e":"");t.textContent=m;$("#tg").appendChild(t);setTimeout(()=>t.remove(),2800)};
+let _y=null;const ask=(t,p,f)=>{$("#mt").textContent=t;$("#mp").textContent=p;$("#mo").classList.add("on");_y=f;$("#my").focus()};
+$("#mn").onclick=()=>$("#mo").classList.remove("on");$("#my").onclick=()=>{$("#mo").classList.remove("on");_y&&_y()};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#mo").classList.remove("on")});
+const TK="demo_theme";if(localStorage.getItem(TK)==="dark")document.documentElement.dataset.theme="dark";
+$("#theme").onclick=()=>{const d=document.documentElement.dataset.theme==="dark";document.documentElement.dataset.theme=d?"":"dark";localStorage.setItem(TK,d?"":"dark")};
 const fmt=n=>Number(n||0).toLocaleString("ar-EG");
 function buildForm(){
  $("#form").innerHTML=CFG.fields.map(f=>`<div><label>${f.l}</label>`+(f.t==="select"?`<select name="${f.k}">${f.o.map(o=>`<option>${o}</option>`).join("")}</select>`:`<input name="${f.k}" type="${f.t}" ${f.t==="number"?'min="0"':''} ${f.req===false?"":"required"} value="${f.d||""}">`)+`</div>`).join("")+`<div style="align-self:end"><button class="btn" id="sub">${CFG.addLabel}</button> <button type="button" class="btn o" id="cancel" style="display:none">إلغاء</button></div>`;
- $("#form").onsubmit=e=>{e.preventDefault();const d={};CFG.fields.forEach(f=>{const v=$("#form").elements[f.k].value;d[f.k]=f.t==="number"?Number(v):v});
+ $("#form").onsubmit=e=>{e.preventDefault();const wasEdit=editId!==null;const d={};CFG.fields.forEach(f=>{const v=$("#form").elements[f.k].value;d[f.k]=f.t==="number"?Number(v):v});
   if(editId){rows=rows.map(r=>r.id===editId?{...r,...d}:r);editId=null}else{rows.unshift({id:Date.now(),...d})}
-  save();$("#form").reset();$("#sub").textContent=CFG.addLabel;$("#cancel").style.display="none";render()};
+  save();toast(wasEdit?"تم حفظ التعديل":"تمت الإضافة بنجاح");$("#form").reset();$("#sub").textContent=CFG.addLabel;$("#cancel").style.display="none";render()};
  $("#cancel").onclick=()=>{editId=null;$("#form").reset();$("#sub").textContent=CFG.addLabel;$("#cancel").style.display="none"};
  const sf=CFG.fields.find(f=>f.t==="select");
  $("#fil").innerHTML=`<option value="">الكل</option>`+(sf?sf.o.map(o=>`<option>${o}</option>`).join(""):"");
@@ -84,11 +102,11 @@ function render(){
  $("#stats").innerHTML=s;
 }
 window.ed=id=>{const r=rows.find(x=>x.id===id);editId=id;CFG.fields.forEach(f=>$("#form").elements[f.k].value=r[f.k]);$("#sub").textContent="حفظ التعديل";$("#cancel").style.display="";scrollTo({top:0,behavior:"smooth"})};
-window.del=id=>{if(confirm("حذف هذا السجل؟")){rows=rows.filter(r=>r.id!==id);save();render()}};
+window.del=id=>ask("حذف السجل؟","لن يمكن التراجع عن الحذف داخل هذا النموذج التجريبي.",()=>{rows=rows.filter(r=>r.id!==id);save();render();toast("تم حذف السجل")});
 window.rc=id=>{const r=rows.find(x=>x.id===id);$("#rc").innerHTML=`<h3>${CFG.title}</h3><p style="text-align:center;margin:0 0 12px;color:#666">إيصال تجريبي - بيانات وهمية</p>`+CFG.fields.map(f=>`<div class="l"><span>${f.l}</span><b>${esc(r[f.k])}${f.t==="number"&&f.u?" "+f.u:""}</b></div>`).join("")+`<p style="text-align:center;margin-top:16px;color:#666">رقم الإيصال: ${String(r.id).slice(-5)} | ${new Date().toLocaleDateString("ar-EG")}</p>`;print()};
 $("#q").oninput=render;$("#fil").onchange=render;
 $("#csv").onclick=()=>{const h=CFG.fields.map(f=>f.l).join(",");const b=rows.map(r=>CFG.fields.map(f=>'"'+String(r[f.k]).replace(/"/g,'""')+'"').join(",")).join("\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+h+"\n"+b],{type:"text/csv"}));a.download=CFG.key+".csv";a.click()};
-$("#reset").onclick=()=>{if(confirm("استعادة البيانات التجريبية؟")){rows=CFG.seed.map((r,i)=>({id:i+1,...r}));save();render()}};
+$("#reset").onclick=()=>ask("استعادة البيانات التجريبية؟","سيتم استبدال بياناتك المحلية بالبيانات الأصلية.",()=>{rows=CFG.seed.map((r,i)=>({id:i+1,...r}));save();render();toast("تمت الاستعادة")});
 buildForm();render();
 </script>
 </body></html>
