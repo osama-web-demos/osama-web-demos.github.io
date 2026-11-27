@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مساكن الأطلس | Demo</title><meta name="description" content="عرض وحدات عقارية بمنزلقات مساحة وميزانية. نموذج تجريبي ببيانات وهمية."><style>*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;line-height:1.65;letter-spacing:0}button,input,select{font:inherit}
+.demo{position:fixed;inset-inline-start:12px;bottom:12px;z-index:9;background:#fef3c7;color:#78350f;border:1px solid #fde68a;border-radius:99px;padding:4px 14px;font-size:12.5px;font-weight:600;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.back{position:fixed;inset-inline-end:12px;bottom:12px;z-index:9;background:#fff;color:#111;border:1px solid #ddd;border-radius:99px;padding:4px 14px;font-size:12.5px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.toast{position:fixed;top:16px;left:50%;transform:translate(-50%,-80px);background:#111;color:#fff;padding:9px 18px;border-radius:10px;transition:transform .35s cubic-bezier(.16,1,.3,1);z-index:20;font-size:14px}.toast.on{transform:translate(-50%,0)}
+button:active{transform:scale(.97)}:focus-visible{outline:3px solid currentColor;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+body{background:#f5f0e6;color:#10302b;font-family:Georgia,"Times New Roman","Segoe UI",serif}
+header{background:#0b3b35;color:#f5f0e6;padding:56px 24px 90px;position:relative;overflow:hidden}header:after{content:"";position:absolute;inset-inline-end:-60px;top:-60px;width:320px;height:320px;border:1px solid #d9f99d55;border-radius:50%;box-shadow:0 0 0 40px #d9f99d0d,0 0 0 90px #d9f99d08}
+header h1{font-size:clamp(30px,6vw,54px);margin:0 0 6px;font-weight:400;max-width:700px}header p{font-family:"Segoe UI",Tahoma,sans-serif;margin:0;opacity:.8;max-width:520px}
+.panel{max-width:1000px;margin:-56px auto 0;background:#fff;border:1px solid #0b3b3522;padding:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;position:relative;font-family:"Segoe UI",Tahoma,sans-serif}
+label{font-size:13px;display:block;margin-bottom:4px}label b{float:left;font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:#0b3b35}
+select{width:100%;padding:8px;border:1px solid #0b3b3544;background:#f5f0e6}
+.est{background:#0b3b35;color:#f5f0e6;padding:14px;grid-column:1/-1;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}.est b{color:#d9f99d;font-size:20px;font-variant-numeric:tabular-nums}
+.grid{max-width:1000px;margin:26px auto 80px;padding:0 16px;display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
+.card{background:#fff;border:1px solid #0b3b3522;transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s}.card:hover{transform:translateY(-5px);box-shadow:0 18px 40px #0b3b3526}
+.art{height:150px;position:relative;overflow:hidden}.art svg{width:100%;height:100%}
+.card div.b{padding:14px 16px;font-family:"Segoe UI",Tahoma,sans-serif}.card h3{font-family:Georgia,serif;font-weight:400;font-size:21px;margin:0}.meta{color:#4b635e;font-size:13px;display:flex;gap:12px;margin:4px 0 10px}
+.pr{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums}.pr small{font-weight:400;color:#4b635e;font-size:12px}
+.fav{position:absolute;top:8px;inset-inline-start:8px;background:#fff;border:0;border-radius:50%;width:34px;height:34px;cursor:pointer;font-size:17px;color:#0b3b35}.fav.on{background:#d9f99d}
+.empty{grid-column:1/-1;text-align:center;padding:40px;color:#4b635e}</style></head><body><header><h1>مساكن الأطلس</h1><p>اختر المساحة والميزانية، وشاهد الوحدات المناسبة والسعر التقديري يتحدثان فوراً.</p></header>
+<div class="panel"><div><label>المساحة المطلوبة <b id="vA"></b></label><input type="range" id="a" min="40" max="300" step="5" value="120"></div>
+<div><label>الميزانية القصوى (مليون جنيه) <b id="vB"></b></label><input type="range" id="b" min="1" max="12" step="0.5" value="6"></div>
+<div><label>المنطقة</label><select id="z"><option value="">الكل</option><option>الحي الهادئ</option><option>الكورنيش</option><option>المدينة الجديدة</option></select></div>
+<div class="est"><span>تقدير توضيحي لوحدة بهذه المساحة في المنطقة المختارة (افتراض: سعر المتر ثابت لكل منطقة)</span><b id="est"></b></div></div>
+<main class="grid" id="g"></main><div class="toast" id="toast" role="status"></div><div class="demo">Demo · بيانات وهمية</div><a class="back" href="../">← المعرض</a><script>function toast(t){var e=document.getElementById("toast");e.textContent=t;e.classList.add("on");clearTimeout(toast.t);toast.t=setTimeout(function(){e.classList.remove("on")},2200)}
+function fmt(n){return Number(n).toLocaleString("ar-EG")}
+var P={"الحي الهادئ":24000,"الكورنيش":41000,"المدينة الجديدة":18000};
+var D=[["شقة بحديقة","الحي الهادئ",110,3,"#d9f99d"],["دوبلكس مطل","الكورنيش",190,4,"#bde0d6"],["شقة عائلية","المدينة الجديدة",150,3,"#f2e2b3"],["استوديو عملي","الكورنيش",55,1,"#c9d6f2"],["فيلا مصغرة","المدينة الجديدة",260,5,"#e8c9b8"],["شقة بسقف عالٍ","الحي الهادئ",95,2,"#d5ead0"],["بنتهاوس","الكورنيش",280,4,"#cfc2e8"],["شقة اقتصادية","المدينة الجديدة",75,2,"#f4d4d4"]].map(function(x,i){return{id:i,n:x[0],z:x[1],m:x[2],r:x[3],c:x[4],p:x[2]*P[x[1]]}});
+var fav=JSON.parse(localStorage.getItem("atlas_fav")||"[]");
+function art(c,i){var h=30+i*7%40;return '<svg viewBox="0 0 300 150" preserveAspectRatio="none"><rect width="300" height="150" fill="'+c+'"/><g fill="#0b3b35"><rect x="40" y="'+(150-h-30)+'" width="60" height="'+(h+30)+'"/><rect x="110" y="'+(150-h-60)+'" width="80" height="'+(h+60)+'" opacity=".85"/><rect x="200" y="'+(150-h-10)+'" width="60" height="'+(h+10)+'" opacity=".7"/></g><g fill="#f5f0e6"><rect x="126" y="40" width="10" height="12"/><rect x="146" y="40" width="10" height="12"/><rect x="126" y="62" width="10" height="12"/></g></svg>'}
+function render(){var a=+$("a").value,b=+$("b").value*1e6,z=$("z").value;$("vA").textContent=a+" م²";$("vB").textContent=b/1e6;
+$("est").textContent=fmt(Math.round(a*(P[z]||27000)))+" جنيه";
+var L=D.filter(function(d){return d.m>=a*.7&&d.m<=a*1.3&&d.p<=b&&(!z||d.z==z)});
+$("g").innerHTML=L.length?L.map(function(d){return '<article class="card"><div class="art">'+art(d.c,d.id)+'<button class="fav'+(fav.indexOf(d.id)>-1?" on":"")+'" data-i="'+d.id+'" aria-label="حفظ في المفضلة">♥</button></div><div class="b"><h3>'+d.n+'</h3><div class="meta"><span>'+d.z+'</span><span>'+d.m+' م²</span><span>'+d.r+' غرف</span></div><div class="pr">'+fmt(d.p)+' <small>جنيه (تقديري)</small></div></div></article>'}).join(""):'<p class="empty">لا توجد وحدات بهذه المعايير. جرّب توسيع المساحة أو الميزانية.</p>'}
+function $(i){return document.getElementById(i)}
+["a","b","z"].forEach(function(i){$(i).oninput=render});
+$("g").onclick=function(e){var b=e.target.closest(".fav");if(!b)return;var i=+b.dataset.i,k=fav.indexOf(i);k>-1?fav.splice(k,1):fav.push(i);localStorage.setItem("atlas_fav",JSON.stringify(fav));toast(k>-1?"أُزيلت من المفضلة":"حُفظت في المفضلة (على هذا المتصفح فقط)");render()};
+render()</script></body></html>
